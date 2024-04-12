@@ -1,0 +1,22 @@
+body {
+  background-color: #101010;
+  color: white;
+  display: flex;
+  font-family: Arial, sans-serif;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+label {
+  display: block;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  color: white;
+  background-color: #202020;
+  border-radius: 10px;
+}
