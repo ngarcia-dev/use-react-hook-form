@@ -103,6 +103,17 @@ function App() {
         <option value="ar">Argentina</option>
       </select>
 
+      {watch("pais") === "ar" && (
+        <>
+          <label htmlFor="provincia">Provincia</label>
+          <select {...register("provincia")}>
+            <option value="bue">Buenos Aires</option>
+            <option value="cat">Catamarca</option>
+            <option value="cor">Córdoba</option>
+          </select>
+        </>
+      )}
+
       <label htmlFor="foto">Archivo</label>
       <input type="file" {...register("foto")} />
 
