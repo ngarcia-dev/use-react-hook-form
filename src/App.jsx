@@ -7,6 +7,7 @@ function App() {
     formState: { errors },
     watch,
     setValue,
+    reset,
   } = useForm({
     defaultValues: {
       pais: "ar",
@@ -16,6 +17,8 @@ function App() {
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
+    alert("Formulario enviado");
+    reset();
     // Aquí puedes hacer la petición a tu API, guardar en localStorage, etc.
   });
 
