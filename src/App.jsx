@@ -6,10 +6,12 @@ function App() {
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
   } = useForm();
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
+    // Aquí puedes hacer la petición a tu API, guardar en localStorage, etc.
   });
 
   return (
@@ -115,10 +117,25 @@ function App() {
       )}
 
       <label htmlFor="foto">Archivo</label>
-      <input type="file" {...register("foto")} />
+      <input
+        type="file"
+        onChange={(e) => {
+          console.log(e.target.files[0]);
+          setValue("foto", e.target.files[0].name);
+        }}
+      />
 
       <label htmlFor="terminos">Acepto términos y condiciones</label>
-      <input type="checkbox" {...register("terminos")} />
+      <input
+        type="checkbox"
+        {...register("terminos", {
+          required: {
+            value: true,
+            message: "Debes aceptar los términos y condiciones",
+          },
+        })}
+      />
+      {errors.terminos && <span>{errors.terminos.message}</span>}
 
       <button type="submit">enviar</button>
       <pre>{JSON.stringify(watch(), null, 2)}</pre>
