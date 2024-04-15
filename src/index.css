@@ -20,3 +20,8 @@ button {
   background-color: #202020;
   border-radius: 10px;
 }
+
+span {
+  color: red;
+  font-size: x-small;
+}

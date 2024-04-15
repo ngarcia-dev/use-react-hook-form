@@ -1,7 +1,11 @@
 import { useForm } from "react-hook-form";
 
 function App() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
@@ -10,19 +14,75 @@ function App() {
   return (
     <form onSubmit={onSubmit}>
       <label htmlFor="name">Nombre</label>
-      <input type="text" {...register("name")} />
+      <input
+        type="text"
+        {...register("name", {
+          required: {
+            value: true,
+            message: "El nombre es requerido",
+          },
+          minLength: {
+            value: 2,
+            message: "El nombre debe tener al menos 2 caracteres",
+          },
+        })}
+      />
+      {errors.name && <span>{errors.name.message}</span>}
 
       <label htmlFor="correo">Correo</label>
-      <input type="email" {...register("correo")} />
+      <input
+        type="email"
+        {...register("correo", {
+          required: {
+            value: true,
+            message: "El correo es requerido",
+          },
+          pattern: {
+            value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+            message: "El correo no es valido",
+          },
+        })}
+      />
+      {errors.correo && <span>{errors.correo.message}</span>}
 
       <label htmlFor="password">Contraseña</label>
-      <input type="password" {...register("password")} />
+      <input
+        type="password"
+        {...register("password", {
+          required: {
+            value: true,
+            message: "La contraseña es requerida",
+          },
+          minLength: {
+            value: 6,
+            message: "La contraseña debe tener al menos 6 caracteres",
+          },
+        })}
+      />
+      {errors.password && <span>{errors.password.message}</span>}
 
       <label htmlFor="confirm">Confirma Contraseña</label>
       <input type="password" {...register("confirm")} />
 
       <label htmlFor="nacimiento">Fecha de nacimiento</label>
-      <input type="date" {...register("nacimiento")} />
+      <input
+        type="date"
+        {...register("nacimiento", {
+          required: {
+            value: true,
+            message: "La fecha de nacimiento es requerida",
+          },
+          validate: (value) => {
+            const fechaNacimiento = new Date(value);
+            const fechaActual = new Date();
+            const edad =
+              fechaActual.getFullYear() - fechaNacimiento.getFullYear();
+
+            return edad >= 18 || "Debes ser mayor de edad";
+          },
+        })}
+      />
+      {errors.nacimiento && <span>{errors.nacimiento.message}</span>}
 
       <label htmlFor="pais">Pais</label>
       <select {...register("pais")}>
