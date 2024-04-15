@@ -5,6 +5,7 @@ function App() {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
 
   const onSubmit = handleSubmit((data) => {
@@ -61,8 +62,19 @@ function App() {
       />
       {errors.password && <span>{errors.password.message}</span>}
 
-      <label htmlFor="confirm">Confirma Contraseña</label>
-      <input type="password" {...register("confirm")} />
+      <label htmlFor="confirm">Confirmar Contraseña</label>
+      <input
+        type="password"
+        {...register("confirm", {
+          required: {
+            value: true,
+            message: "La confirmación de contraseña es requerida",
+          },
+          validate: (value) =>
+            value === watch("password") || "Las contraseñas no coinciden",
+        })}
+      />
+      {errors.confirm && <span>{errors.confirm.message}</span>}
 
       <label htmlFor="nacimiento">Fecha de nacimiento</label>
       <input
@@ -98,6 +110,7 @@ function App() {
       <input type="checkbox" {...register("terminos")} />
 
       <button type="submit">enviar</button>
+      <pre>{JSON.stringify(watch(), null, 2)}</pre>
     </form>
   );
 }
