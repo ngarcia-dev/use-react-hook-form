@@ -7,7 +7,12 @@ function App() {
     formState: { errors },
     watch,
     setValue,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      pais: "ar",
+      provincia: "bue",
+    },
+  });
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
